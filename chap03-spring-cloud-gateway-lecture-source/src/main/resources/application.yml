@@ -7,15 +7,27 @@ spring:
   cloud:
     gateway:
       routes:
-         - id: 1st_service
-           uri: http://localhost:/
+         - id: my-1st-service
+           uri: lb://MY-1ST-SERVICE
+#           uri: http://localhost:58212/
            predicates:
-            -Path=/first-service/**
-         - id: 2nd Service
-           uri: http:/localhost:/
+            - Path=/first-service/**
+           filters:
+             #???
+             - AddRequestHeader=first-request, first-request-header
+             #???
+             - AddResponseHeader=first-response, first-response-header
+             # first-service ?? ???? segment?? ?????. ??? ??? segment? ???
+             - RewritePath=/first-service/(?<segment>.*), /$\{segment}
+         - id: my-2nd-service
+           uri: lb://MY-2ND-SERVICE
+#           uri: http://localhost:58220/
            predicates:
-            -Path=/second-service/**
-
+            - Path=/second-service/**
+           filters:
+             - AddRequestHeader=second-request, second-request-header
+             - AddResponseHeader=second-response, second-response-header
+             - RewritePath=/second-service/(?<segment>.*), /$\{segment}
 eureka:
   client:
     register-with-eureka: true

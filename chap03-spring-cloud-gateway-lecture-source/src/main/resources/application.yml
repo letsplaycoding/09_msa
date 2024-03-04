@@ -1,44 +1,57 @@
 server:
   port: 8000
 
-spring:
-  application:
-    name: gateway-server
-  cloud:
-    gateway:
-      routes:
-         - id: my-1st-service
-           #lb=loadbalancing
-
-           # ?????(???????? ???? ???? ???)?? ??, ???? ??(uri)
-           uri: lb://MY-1ST-SERVICE
-#           uri: http://localhost:58212/
-
-           # ??? ?????? ?? ??? '/first-service/**? ????~' ?? ??
-           predicates:
-            - Path=/first-service/**
-
-           # Global, Custom ?? ??? ???? ??
-           # (request ? response header? ? ??, segment? ??? ?? ??)
-           filters:
-             #???
-             - AddRequestHeader=first-request, first-request-header
-             #???
-             - AddResponseHeader=first-response, first-response-header
-             # first-service ?? ???? segment?? ?????. ??? ??? segment? ???
-             - RewritePath=/first-service/(?<segment>.*), /$\{segment}
-         - id: my-2nd-service
-           uri: lb://MY-2ND-SERVICE
-#           uri: http://localhost:58220/
-           predicates:
-            - Path=/second-service/**
-           filters:
-             - AddRequestHeader=second-request, second-request-header
-             - AddResponseHeader=second-response, second-response-header
-             - RewritePath=/second-service/(?<segment>.*), /$\{segment}
 eureka:
   client:
     register-with-eureka: true
     fetch-registry: true
     service-url:
       defaultZone: http://localhost:8761/eureka
+
+#spring:
+#  application:
+#    name: gateway-server
+#  cloud:
+#    gateway:
+#      routes:
+#         - id: my-1st-service
+#           #lb=loadbalancing
+#
+#           # ?????(???????? ???? ???? ???)?? ??, ???? ??(uri)
+#           uri: lb://MY-1ST-SERVICE
+##           uri: http://localhost:58212/
+#
+#           # ??? ?????? ?? ??? '/first-service/**? ????~' ?? ??
+#           predicates:
+#            - Path=/first-service/**
+#
+#           # Global, Custom ?? ??? ???? ??
+#           # (request ? response header? ? ??, segment? ??? ?? ??)
+#           filters:
+#             #???
+#             - AddRequestHeader=first-request, first-request-header
+#             #???
+#             - AddResponseHeader=first-response, first-response-header
+#             # first-service ?? ???? segment?? ?????. ??? ??? segment? ???
+#             - RewritePath=/first-service/(?<segment>.*), /$\{segment}
+#         - id: my-2nd-service
+#           uri: lb://MY-2ND-SERVICE
+##           uri: http://localhost:58220/
+#           predicates:
+#            - Path=/second-service/**
+#           filters:
+#             - AddRequestHeader=second-request, second-request-header
+#             - AddResponseHeader=second-response, second-response-header
+#             - RewritePath=/second-service/(?<segment>.*), /$\{segment}
+spring:
+  application:
+    name: gateway-server
+  cloud:
+    gateway:
+      routes:
+        - id: user-service
+          uri: lb://SWCAMP-USER-SERVICE
+          predicates:
+            - Path=/user-service/**
+          filters:
+            - RewritePath=/user-service/(?<segment>.*), /$\{segment}

@@ -8,6 +8,7 @@ spring:
     gateway:
       routes:
          - id: my-1st-service
+           #lb=loadbalancing
            uri: lb://MY-1ST-SERVICE
 #           uri: http://localhost:58212/
            predicates:

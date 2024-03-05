@@ -32,3 +32,11 @@ eureka:
 # yml 파일에 추가적인 변수 작성
 swcamp:
   message: Let's do msa!
+
+token:
+
+  # JWT Token 만료 시간 설정 (ms 단위)
+  expiration_time: 43200000     # 12시간
+
+  # JWT Token의 Verify Signature를 위한 secret-key
+  secret: l1Z5I9WufSD5qM0UTHXDJa1kaGxBlyhKMbx+ONkqzeRTlKdF8Bq37mA3Z8nhjRlwVUrL/u3bdkFeamIrUoWvVw==

@@ -43,6 +43,7 @@ eureka:
 #             - AddRequestHeader=second-request, second-request-header
 #             - AddResponseHeader=second-response, second-response-header
 #             - RewritePath=/second-service/(?<segment>.*), /$\{segment}
+
 spring:
   application:
     name: gateway-server

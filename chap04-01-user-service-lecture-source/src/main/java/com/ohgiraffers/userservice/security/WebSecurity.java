@@ -20,8 +20,8 @@ public class WebSecurity {
 
     UserService userService;
     BCryptPasswordEncoder bCryptPasswordEncoder;
-
     Environment env;
+
     @Autowired
     public WebSecurity(UserService userService, BCryptPasswordEncoder bCryptPasswordEncoder,
                         Environment env) {
@@ -54,10 +54,10 @@ public class WebSecurity {
         return http.build();
     }
 
+    /* 설명. 인증(authentication)용 메소드 ,401*/
     private Filter getAuthenticationFilter(AuthenticationManager authenticationManager) {
         return new AuthenticationFilter(authenticationManager, userService, env);
     }
 
-    /* 설명. 인증(authentication)용 메소드 ,401*/
 
 }

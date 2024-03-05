@@ -7,6 +7,7 @@ import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.modelmapper.spi.MatchingStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,10 +19,15 @@ public class UserServiceImpl implements UserService{
     private UserRepository userRepository;
     private ModelMapper modelMapper;
 
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, ModelMapper modelMapper) {
+    public UserServiceImpl(UserRepository userRepository,
+                           ModelMapper modelMapper,
+                           BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userRepository = userRepository;
         this.modelMapper = modelMapper;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     @Override
@@ -40,9 +46,12 @@ public class UserServiceImpl implements UserService{
         modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
         UserEntity userEntity = modelMapper.map(userDTO, UserEntity.class);
 
-        userEntity.setEncryptedPwd("암호화된 비밀번호");
+        /* 설명. spring security 모듈 추가 후 진행하므로 security 설정도 추가한다. */
+//        userEntity.setEncryptedPwd("암호화된 비밀번호");
+        userEntity.setEncryptedPwd(bCryptPasswordEncoder.encode(userDTO.getPwd()));
 
         userRepository.save(userEntity);
+
 
     }
 }

@@ -80,4 +80,15 @@ public class UserServiceImpl implements UserService{
                         true,true,true,true,
                         new ArrayList<>());
     }
+
+    @Override
+    public UserDTO getUserById(String id) {
+        UserEntity userEntity = userRepository.findById(Long.valueOf(id))
+                .orElseThrow(() -> {return new UsernameNotFoundException("조회된 회원 없음");
+                });
+
+        UserDTO userDTO = modelMapper.map(userEntity, UserDTO.class);
+
+        return userDTO;
+    }
 }

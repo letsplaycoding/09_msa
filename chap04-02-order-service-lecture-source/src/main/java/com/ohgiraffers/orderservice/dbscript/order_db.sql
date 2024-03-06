@@ -1,3 +1,6 @@
+DROP TABLE IF EXISTS tbl_order_menu2;
+DROP TABLE IF EXISTS tbl_order2;
+
 CREATE TABLE IF NOT EXISTS tbl_order2
 (
     order_code    INT AUTO_INCREMENT COMMENT '주문코드',

@@ -57,6 +57,7 @@ spring:
 #          filters:
 #            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
 
+        # forwarding 방식 ( 헤더에 토큰이 있다 )
        # 회원 가입 이후 로드밸런싱
         - id: user-service
           uri: lb://SWCAMP-USER-SERVICE
@@ -83,6 +84,14 @@ spring:
             - Method=POST
           filters:
             - RewritePath=/user-service/(?<segment>.*), /$\{segment}
+
+        # order-service 주문관련 도메인(마이크로 사비스) 서버 추가 후
+        - id: order-service
+          uri: lb://SWCAMP-ORDER-SERVICE
+          predicates:
+            - Path=/order-service/**
+          filters:
+            - RewritePath=/order-service/(?<segment>.*), /$\{segment}
 
 token:
   secret: l1Z5I9WufSD5qM0UTHXDJa1kaGxBlyhKMbx+ONkqzeRTlKdF8Bq37mA3Z8nhjRlwVUrL/u3bdkFeamIrUoWvVw==

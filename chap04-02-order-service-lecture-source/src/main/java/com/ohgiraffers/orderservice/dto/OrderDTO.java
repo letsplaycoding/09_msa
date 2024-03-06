@@ -14,5 +14,5 @@ public class OrderDTO {
     private String orderTime;
     private int totalOrderPrice;
 
-    private List<OrderMenu> orderMenus;
+    private List<OrderMenuDTO> orderMenus;
 }
